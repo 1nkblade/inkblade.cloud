@@ -1,0 +1,50 @@
+---
+globs: *.blade.php
+description: "Blade template development rules for Inkblade.cloud"
+---
+
+# 🎨 Blade Template Rules
+
+## Template Structure
+Always use this base structure for new project templates:
+
+```blade
+@extends('layouts.app')
+
+@section('title', 'Project Name - Inkblade.cloud')
+
+@push('styles')
+<style>
+    .project-container {
+        padding: 80px 20px 40px;
+        min-height: calc(100vh - 70px);
+        background: linear-gradient(135deg, #002b36 0%, #073642 100%);
+        font-family: 'JetBrains Mono', 'Courier New', monospace;
+    }
+    
+    @media (max-width: 768px) {
+        .project-container { padding: 60px 15px 30px; }
+    }
+</style>
+@endpush
+
+@section('content')
+<div class="project-container">
+    <!-- Project content -->
+</div>
+@endsection
+```
+
+## Styling Rules
+- Use Solarized Dark colors only
+- Mobile-first responsive design
+- JetBrains Mono font family
+- Touch targets minimum 48px
+- Use `@push('styles')` for page-specific CSS
+
+## Project Integration
+For new projects, follow this pattern:
+1. Create `resources/views/projects/{name}/index.blade.php`
+2. Add entry to [ProjectSeeder.php](mdc:database/seeders/ProjectSeeder.php)
+3. Update [ProjectController.php](mdc:app/Http/Controllers/ProjectController.php) show() method
+4. Test responsive design on all breakpoints

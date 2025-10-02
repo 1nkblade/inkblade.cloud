@@ -1,0 +1,73 @@
+---
+alwaysApply: true
+description: "Inkblade.cloud project context and development rules"
+---
+
+# 🤖 Inkblade.cloud Project Context
+
+You are an AI assistant for **Inkblade.cloud**, a modern web platform built with:
+- **Backend**: Laravel 12.x (PHP 8.2+)
+- **Frontend**: Blade templates + TailwindCSS 4.x + Vite
+- **Database**: SQLite (dev) / MySQL/PostgreSQL (prod)
+- **Design**: Solarized Dark theme with JetBrains Mono font
+- **Architecture**: MVC pattern with mobile-first responsive design
+
+## 🎨 Design System (MANDATORY)
+
+### Colors (Solarized Dark)
+```css
+--solarized-base03: #002b36;  /* Main background */
+--solarized-base02: #073642;  /* Secondary background */
+--solarized-base01: #586e75;  /* Secondary text */
+--solarized-base00: #657b83;  /* Normal text */
+--solarized-base0:  #839496;  /* Light text */
+--solarized-base1:  #93a1a1;  /* Lighter text */
+--solarized-base2:  #eee8d5;  /* Primary text */
+--solarized-yellow: #b58900;  /* Accent color */
+```
+
+### Typography
+- **Font**: `'JetBrains Mono', 'Courier New', monospace`
+- **Weight**: 400-600 normal, 700+ headings
+- **Spacing**: `letter-spacing: 1px` for brand/titles
+
+### Responsive Breakpoints
+```css
+@media (max-width: 768px) { /* Tablet */ }
+@media (max-width: 480px) { /* Mobile */ }
+@media (max-width: 430px) { /* iPhone */ }
+```
+
+## 🚀 Development Rules
+
+### ✅ ALWAYS DO
+- **Mobile-first**: Start with mobile design
+- **Solarized Dark**: Use only theme colors
+- **JetBrains Mono**: Use project font
+- **Touch targets**: Minimum 48px for interactions
+- **Laravel conventions**: Follow PSR-4 and naming
+- **Responsive**: Test all breakpoints
+- **Performance**: Optimize for Lighthouse > 90
+
+### ❌ NEVER DO
+- Change Solarized Dark theme colors
+- Modify navbar structure without explicit request
+- Use external color schemes
+- Skip mobile responsiveness
+- Hardcode values instead of configuration
+- Break existing functionality
+
+## 🔧 Key Files
+- **Layout**: [resources/views/layouts/app.blade.php](mdc:resources/views/layouts/app.blade.php)
+- **Controller**: [app/Http/Controllers/ProjectController.php](mdc:app/Http/Controllers/ProjectController.php)
+- **Model**: [app/Models/Project.php](mdc:app/Models/Project.php)
+- **Routes**: [routes/web.php](mdc:routes/web.php)
+- **Seeder**: [database/seeders/ProjectSeeder.php](mdc:database/seeders/ProjectSeeder.php)
+
+## 📱 Mobile Requirements
+- **Touch targets**: 48px minimum
+- **Viewport**: Include meta viewport tag
+- **Touch action**: `manipulation` for interactive elements
+- **Tap highlight**: Disable with `-webkit-tap-highlight-color: transparent`
+
+**Remember**: Always prioritize mobile-first design, Solarized Dark theme consistency, and Laravel best practices. When in doubt, follow existing project patterns.

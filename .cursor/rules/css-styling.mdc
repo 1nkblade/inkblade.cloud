@@ -1,0 +1,95 @@
+---
+globs: *.css
+description: "CSS styling rules for Inkblade.cloud"
+---
+
+# 🎨 CSS Styling Rules
+
+## Solarized Dark Theme (MANDATORY)
+Always use these colors:
+
+```css
+/* Solarized Dark Colors */
+--solarized-base03: #002b36;  /* Main background */
+--solarized-base02: #073642;  /* Secondary background */
+--solarized-base01: #586e75;  /* Secondary text */
+--solarized-base00: #657b83;  /* Normal text */
+--solarized-base0:  #839496;  /* Light text */
+--solarized-base1:  #93a1a1;  /* Lighter text */
+--solarized-base2:  #eee8d5;  /* Primary text */
+--solarized-yellow: #b58900;  /* Accent color */
+```
+
+## Typography Rules
+```css
+font-family: 'JetBrains Mono', 'Courier New', monospace;
+letter-spacing: 1px; /* For brand/titles */
+```
+
+## Mobile-First Responsive Design
+```css
+/* Base styles for mobile */
+.element {
+    /* Mobile styles */
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+    .element {
+        /* Tablet adjustments */
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .element {
+        /* Mobile adjustments */
+    }
+}
+
+/* iPhone */
+@media (max-width: 430px) {
+    .element {
+        /* iPhone adjustments */
+    }
+}
+```
+
+## Touch-Friendly Interactions
+```css
+.interactive-element {
+    min-height: 48px; /* Minimum touch target */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.interactive-element:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+}
+```
+
+## Project Container Pattern
+```css
+.project-container {
+    padding: 80px 20px 40px;
+    min-height: calc(100vh - 70px);
+    background: linear-gradient(135deg, #002b36 0%, #073642 100%);
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+@media (max-width: 768px) {
+    .project-container {
+        padding: 60px 15px 30px;
+    }
+}
+```
+
+## Rules
+- **NEVER** use colors outside Solarized Dark palette
+- **ALWAYS** start with mobile styles first
+- **ALWAYS** use JetBrains Mono font
+- **ALWAYS** ensure 48px minimum touch targets
+- **ALWAYS** test all breakpoints

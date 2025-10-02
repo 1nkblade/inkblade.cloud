@@ -1,0 +1,73 @@
+---
+globs: *.js
+description: "JavaScript development rules for Inkblade.cloud"
+---
+
+# ⚡ JavaScript Rules
+
+## Mobile-First Development
+- Prioritize touch interactions
+- Use modern ES6+ syntax
+- Implement proper error handling
+- Optimize for performance
+
+## Touch-Friendly Interactions
+```javascript
+// Touch target minimum 48px
+const touchElements = document.querySelectorAll('.interactive-element');
+touchElements.forEach(element => {
+    element.style.minHeight = '48px';
+    element.style.touchAction = 'manipulation';
+    element.style.webkitTapHighlightColor = 'transparent';
+});
+
+// Touch feedback
+element.addEventListener('touchstart', function() {
+    this.style.transform = 'scale(0.95)';
+});
+
+element.addEventListener('touchend', function() {
+    this.style.transform = 'scale(1)';
+});
+```
+
+## Mobile Menu Pattern
+```javascript
+// Mobile menu toggle (following existing pattern)
+document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+    const nav = document.getElementById('navbar-nav');
+    nav.classList.toggle('active');
+});
+
+// Close mobile menu when clicking on a link
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', function() {
+        const nav = document.getElementById('navbar-nav');
+        nav.classList.remove('active');
+    });
+});
+```
+
+## Performance Rules
+- Use event delegation for dynamic content
+- Implement lazy loading for images
+- Minimize DOM manipulation
+- Use requestAnimationFrame for animations
+- Optimize for Lighthouse score > 90
+
+## Error Handling
+```javascript
+try {
+    // Code that might fail
+} catch (error) {
+    console.error('Error:', error);
+    // Graceful fallback
+}
+```
+
+## Rules
+- **ALWAYS** consider mobile-first approach
+- **ALWAYS** implement touch-friendly interactions
+- **ALWAYS** use modern JavaScript features
+- **ALWAYS** handle errors gracefully
+- **ALWAYS** optimize for performance

@@ -1,0 +1,55 @@
+---
+alwaysApply: false
+description: "How to use Inkblade.cloud Cursor rules"
+---
+
+# 📋 Inkblade.cloud Cursor Rules Usage
+
+## Available Rules
+
+### 🎯 Always Applied
+- **project-context.mdc**: Core project context, design system, and development rules
+
+### 📁 File-Specific Rules
+- **blade-templates.mdc**: Applied to `*.blade.php` files
+- **laravel-php.mdc**: Applied to `*.php` files  
+- **css-styling.mdc**: Applied to `*.css` files
+- **javascript.mdc**: Applied to `*.js` files
+
+## How Rules Work
+
+### Automatic Application
+- **project-context.mdc**: Always loaded for every request
+- **File-specific rules**: Automatically applied based on file extensions
+
+### Manual Application
+You can reference any rule by description:
+- "Apply blade template rules"
+- "Use Laravel PHP rules"
+- "Follow CSS styling rules"
+- "Apply JavaScript rules"
+
+## Key Benefits
+- **Consistency**: Same patterns across all development
+- **Context**: Immediate project understanding
+- **Efficiency**: No need to re-explain project structure
+- **Quality**: Enforced best practices
+
+## Project Structure Reference
+- **Layout**: [resources/views/layouts/app.blade.php](mdc:resources/views/layouts/app.blade.php)
+- **Controller**: [app/Http/Controllers/ProjectController.php](mdc:app/Http/Controllers/ProjectController.php)
+- **Model**: [app/Models/Project.php](mdc:app/Models/Project.php)
+- **Routes**: [routes/web.php](mdc:routes/web.php)
+- **Seeder**: [database/seeders/ProjectSeeder.php](mdc:database/seeders/ProjectSeeder.php)
+
+## Quick Commands
+```bash
+# Development
+composer run dev
+
+# Database
+php artisan migrate
+php artisan db:seed --class=ProjectSeeder
+```
+
+These rules ensure consistent, high-quality development following Inkblade.cloud standards.

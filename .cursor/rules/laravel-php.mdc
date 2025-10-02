@@ -1,0 +1,63 @@
+---
+globs: *.php
+description: "Laravel PHP development rules for Inkblade.cloud"
+---
+
+# 🚀 Laravel PHP Rules
+
+## Controller Development
+- Follow PSR-4 autoloading standards
+- Use descriptive method names
+- Implement proper error handling
+- Use Eloquent relationships appropriately
+
+## Model Development
+- Use fillable arrays for mass assignment protection
+- Implement proper casting for JSON fields
+- Add useful scopes for common queries
+- Follow Laravel naming conventions
+
+## Database Integration
+For new projects, add to [ProjectSeeder.php](mdc:database/seeders/ProjectSeeder.php):
+
+```php
+[
+    'title' => 'Project Name',
+    'description' => 'Brief description',
+    'status' => 'completed',
+    'technologies' => ['Laravel', 'PHP', 'JavaScript'],
+    'github_url' => 'https://github.com/username/repo',
+    'demo_url' => '/projects/project-name',
+    'image_url' => '/icons/project-icon.png',
+    'sort_order' => 1,
+    'is_featured' => true
+]
+```
+
+## Common Tasks
+
+### Add New Project
+1. Create Blade template in `resources/views/projects/{name}/index.blade.php`
+2. Add entry to ProjectSeeder.php
+3. Update ProjectController::show() method
+4. Test responsive design
+
+### Backend Changes
+1. Follow Laravel conventions
+2. Use Eloquent relationships
+3. Implement proper validation
+4. Add error handling
+
+## Debug Commands
+```bash
+# Development
+composer run dev
+
+# Database
+php artisan migrate
+php artisan db:seed --class=ProjectSeeder
+
+# Reset projects
+php artisan tinker --execute="App\Models\Project::truncate();"
+php artisan db:seed --class=ProjectSeeder
+```
