@@ -20,9 +20,7 @@
     <div class="content-section">
         <h2 class="section-title">Home Page</h2>
         <p class="section-text">
-            This is the main page of your Laravel website with a fixed navbar. 
-            The navbar remains always visible during navigation and includes 
-            a responsive menu for mobile devices.
+            Inkblade.cloud is a modern web app portfolio featuring interactive demos, fun APIs, and a responsive, always-visible navigation bar.
         </p>
     </div>
 
@@ -35,6 +33,8 @@
 
     <div class="content-section text-center">
         <img src="https://cataas.com/cat/orange?width=400&height=400&t={{ time() }}" alt="Random Orange Cat" class="profile-image lazy-load" id="cat-image" style="cursor: pointer;">
+        <br><br>
+        <button id="new-cat-btn" class="btn btn-secondary">Get New Cat</button>
     </div>
 
     <div class="content-section text-center">
@@ -53,6 +53,10 @@
         <button id="new-fact-btn" class="btn btn-secondary">Get New Fact</button>
     </div>
 
+    <div class="content-section text-center">
+        <h3>Check out my projects</h3>
+        <a href="{{ route('projects') }}" class="btn btn-secondary">View Projects</a>
+    </div>
 
 
 
@@ -120,6 +124,35 @@ document.addEventListener('DOMContentLoaded', function() {
     catImage.addEventListener('error', function() {
         this.src = 'https://cataas.com/cat/orange?width=400&height=400&t=' + Math.random();
     });
+    
+    // New cat button functionality
+    const newCatBtn = document.getElementById('new-cat-btn');
+    
+    function refreshCatImage() {
+        // Add loading state
+        newCatBtn.disabled = true;
+        newCatBtn.textContent = 'Loading...';
+        
+        // Generate new timestamp for fresh image
+        const timestamp = Date.now();
+        catImage.src = `https://cataas.com/cat/orange?width=400&height=400&t=${timestamp}`;
+        
+        // Reset button state when image loads
+        catImage.onload = function() {
+            newCatBtn.disabled = false;
+            newCatBtn.textContent = 'Get New Cat';
+        };
+        
+        // Handle error case
+        catImage.onerror = function() {
+            newCatBtn.disabled = false;
+            newCatBtn.textContent = 'Get New Cat';
+            // Try again with different timestamp
+            this.src = `https://cataas.com/cat/orange?width=400&height=400&t=${Math.random()}`;
+        };
+    }
+    
+    newCatBtn.addEventListener('click', refreshCatImage);
 
     // ===========================================
     // KANYE QUOTES FUNCTIONALITY

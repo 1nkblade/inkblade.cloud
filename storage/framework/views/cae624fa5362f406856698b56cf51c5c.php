@@ -42,7 +42,7 @@
         border-radius: 20px;
         padding: 30px;
         box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
-        width: 320px;
+        width: 380px;
         max-width: 100%;
         animation: fadeInUp 0.8s ease-out;
     }
@@ -226,8 +226,8 @@
         }
 
         .calculator {
-            padding: 20px;
-            width: 320px;
+            padding: 25px;
+            width: 360px;
             max-width: 90vw;
         }
 
@@ -309,8 +309,8 @@
         }
 
         .calculator {
-            padding: 15px;
-            width: 280px;
+            padding: 20px;
+            width: 320px;
             max-width: 95vw;
         }
 
@@ -362,23 +362,23 @@
     /* iPhone specific optimizations */
     @media (max-width: 430px) {
         .calculator {
-            width: 260px;
-            padding: 12px;
+            width: 300px;
+            padding: 18px;
         }
 
         .calc-btn {
-            padding: 14px 8px;
-            min-height: 48px;
-            font-size: 0.95rem;
+            padding: 16px 10px;
+            min-height: 52px;
+            font-size: 1rem;
         }
 
         .calculator-display {
-            padding: 10px;
-            min-height: 70px;
+            padding: 15px;
+            min-height: 75px;
         }
 
         .calculator-result {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
         }
     }
 </style>

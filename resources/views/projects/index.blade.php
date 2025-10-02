@@ -13,6 +13,9 @@
         <h1 class="projects-title">My Projects</h1>
         <p class="projects-subtitle">A showcase of my latest work and development projects</p>
     </div>
+    <div class="container">
+    <a href="{{ route('home') }}" class="btn btn-secondary mt-2 mb-0">Go Back</a>
+    </div>
 </section>
 
 <!-- Projects Grid -->
@@ -39,10 +42,12 @@
                         </div>
                         
                         <div class="project-links">
-                            <a href="{{ $project['github_url'] }}" class="project-link" target="_blank" rel="noopener">
-                                <span>📁</span>
-                                GitHub
-                            </a>
+                            @if($project['github_url'] && $project['github_url'] !== '#')
+                                <a href="{{ $project['github_url'] }}" class="project-link" target="_blank" rel="noopener">
+                                    <span>📁</span>
+                                    GitHub
+                                </a>
+                            @endif
                             
                             @if($project['demo_url'])
                                 <a href="{{ $project['demo_url'] }}" class="project-link secondary" target="_blank" rel="noopener">
