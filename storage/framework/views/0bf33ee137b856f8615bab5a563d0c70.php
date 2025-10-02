@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Admin Panel - Inkblade.cloud')</title>
+    <title><?php echo $__env->yieldContent('title', 'Admin Panel - Inkblade.cloud'); ?></title>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('icons/icons8-cat-32.png') }}">
-    <link rel="shortcut icon" href="{{ asset('icons/icons8-cat-32.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo e(asset('icons/icons8-cat-32.png')); ?>">
+    <link rel="shortcut icon" href="<?php echo e(asset('icons/icons8-cat-32.png')); ?>">
     
     <!-- Google Fonts - JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,10 +15,10 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
     
     <!-- Main CSS -->
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="<?php echo e(asset('css/main.css')); ?>?v=<?php echo e(time()); ?>">
     
     <!-- Page-specific CSS -->
-    @stack('styles')
+    <?php echo $__env->yieldPushContent('styles'); ?>
     
     <style>
         /* Admin-specific styles */
@@ -331,7 +331,7 @@
             }
         }
 
-        @yield('styles')
+        <?php echo $__env->yieldContent('styles'); ?>
     </style>
 </head>
 <body>
@@ -339,13 +339,13 @@
         <!-- Admin Header -->
         <header class="admin-header">
             <div class="admin-header-content">
-                <a href="{{ route('admin.dashboard') }}" class="admin-logo">
-                    <img src="{{ asset('icons/icons8-cat-100.png') }}" alt="Admin Panel">
+                <a href="<?php echo e(route('admin.dashboard')); ?>" class="admin-logo">
+                    <img src="<?php echo e(asset('icons/icons8-cat-100.png')); ?>" alt="Admin Panel">
                     <span class="admin-title">Admin Panel</span>
                 </a>
                 
                 <nav class="admin-nav">
-                    <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                    <a href="<?php echo e(route('admin.dashboard')); ?>" class="<?php echo e(request()->routeIs('admin.dashboard') ? 'active' : ''); ?>">
                         Dashboard
                     </a>
                     
@@ -356,15 +356,15 @@
                             <span class="dropdown-arrow">▼</span>
                         </button>
                         <div class="dropdown-menu" id="dropdownMenu">
-                            <a href="{{ route('admin.projects.index') }}" class="{{ request()->routeIs('admin.projects.*') ? 'active' : '' }}">
+                            <a href="<?php echo e(route('admin.projects.index')); ?>" class="<?php echo e(request()->routeIs('admin.projects.*') ? 'active' : ''); ?>">
                                 Projects
                             </a>
-                            <a href="{{ route('home') }}" target="_blank">
+                            <a href="<?php echo e(route('home')); ?>" target="_blank">
                                 View Site
                             </a>
                             <div class="dropdown-divider"></div>
-                            <form method="POST" action="{{ route('admin.logout') }}" style="display: block;">
-                                @csrf
+                            <form method="POST" action="<?php echo e(route('admin.logout')); ?>" style="display: block;">
+                                <?php echo csrf_field(); ?>
                                 <button type="submit" class="dropdown-logout">
                                     Logout
                                 </button>
@@ -377,7 +377,7 @@
 
         <!-- Main Content -->
         <main class="admin-main">
-            @yield('content')
+            <?php echo $__env->yieldContent('content'); ?>
         </main>
     </div>
 
@@ -396,7 +396,8 @@
             }
         });
 
-        @yield('scripts')
+        <?php echo $__env->yieldContent('scripts'); ?>
     </script>
 </body>
 </html>
+<?php /**PATH /var/www/inkblade.cloud/resources/views/layouts/admin.blade.php ENDPATH**/ ?>

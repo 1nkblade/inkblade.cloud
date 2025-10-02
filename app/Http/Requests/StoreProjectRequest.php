@@ -29,7 +29,7 @@ class StoreProjectRequest extends FormRequest
             'technologies' => 'required|string|max:500',
             'github_url' => 'nullable|url|max:255',
             'demo_url' => 'required|string|max:100|regex:/^[a-z0-9-]+$/',
-            'image_url' => 'nullable|string|max:255',
+            'project_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'sort_order' => 'nullable|integer|min:0|max:999',
             'is_featured' => 'boolean',
         ];
@@ -54,9 +54,9 @@ class StoreProjectRequest extends FormRequest
             'technologies.*.max' => 'Ogni tecnologia non può superare i 50 caratteri.',
             'github_url.url' => 'L\'URL di GitHub deve essere un URL valido.',
             'demo_url.url' => 'L\'URL demo deve essere un URL valido.',
-            'sort_order.integer' => 'L\'ordine deve essere un numero intero.',
-            'sort_order.min' => 'L\'ordine deve essere almeno 0.',
-            'sort_order.max' => 'L\'ordine non può superare 999.',
+            'project_image.image' => 'Il file deve essere un\'immagine valida.',
+            'project_image.mimes' => 'L\'immagine deve essere in formato JPEG, PNG, JPG, GIF o WebP.',
+            'project_image.max' => 'L\'immagine non può superare i 5MB.',
         ];
     }
 }

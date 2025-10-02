@@ -7,6 +7,8 @@ use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -27,7 +29,7 @@ class ProjectController extends Controller
                 'technologies' => $project->technologies,
                 'github_url' => $project->github_url,
                 'demo_url' => $project->demo_url ?: route('project.show', $project->id),
-                'image' => asset($project->image_url ?: 'icons/icons8-cat-100.png')
+                'image' => $project->image_url ? asset($project->image_url) : asset('icons/icons8-cat-100.png')
             ];
         });
 
@@ -63,6 +65,15 @@ class ProjectController extends Controller
             $validated['technologies'] = array_map('trim', explode(',', $validated['technologies']));
             $validated['technologies'] = array_filter($validated['technologies']); // Remove empty values
         }
+        
+        // Handle image upload
+        if ($request->hasFile('project_image')) {
+            $imagePath = $this->handleImageUpload($request->file('project_image'), $validated['title']);
+            $validated['image_url'] = $imagePath;
+        }
+        
+        // Remove the project_image from validated data as it's not a database field
+        unset($validated['project_image']);
         
         // Handle demo URL - create directory if needed (only for new projects)
         if (isset($validated['demo_url']) && !empty($validated['demo_url'])) {
@@ -140,6 +151,20 @@ class ProjectController extends Controller
             $validated['technologies'] = array_filter($validated['technologies']); // Remove empty values
         }
         
+        // Handle image upload
+        if ($request->hasFile('project_image')) {
+            // Delete old image if it exists
+            if ($project->image_url && file_exists(public_path('images/projects/' . basename($project->image_url)))) {
+                unlink(public_path('images/projects/' . basename($project->image_url)));
+            }
+            
+            $imagePath = $this->handleImageUpload($request->file('project_image'), $validated['title']);
+            $validated['image_url'] = $imagePath;
+        }
+        
+        // Remove the project_image from validated data as it's not a database field
+        unset($validated['project_image']);
+        
         // Handle demo URL - create directory if needed (only for new projects)
         if (isset($validated['demo_url']) && !empty($validated['demo_url'])) {
             // Clean the folder name (remove /projects/ prefix if present)
@@ -158,6 +183,11 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        // Delete associated image file if it exists
+        if ($project->image_url && file_exists(public_path('images/projects/' . basename($project->image_url)))) {
+            unlink(public_path('images/projects/' . basename($project->image_url)));
+        }
+        
         $project->delete();
 
         return redirect()->route('admin.projects.index')
@@ -202,6 +232,27 @@ class ProjectController extends Controller
         $slug = trim($slug, '-');
         
         return $slug;
+    }
+
+    /**
+     * Handle image upload and rename file
+     */
+    private function handleImageUpload($file, $projectTitle)
+    {
+        // Create projects directory if it doesn't exist
+        $projectsDir = public_path('images/projects');
+        if (!is_dir($projectsDir)) {
+            mkdir($projectsDir, 0755, true);
+        }
+        
+        // Generate filename from project title
+        $filename = Str::slug($projectTitle) . '.' . $file->getClientOriginalExtension();
+        
+        // Move file to projects directory
+        $file->move($projectsDir, $filename);
+        
+        // Return the relative path for database storage
+        return 'images/projects/' . $filename;
     }
 
     /**

@@ -1,10 +1,17 @@
 @extends('layouts.admin')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/admin-projects.css') }}?v={{ time() }}">
+@endpush
+
 @section('content')
 <div class="admin-card">
-    <div style="display: flex; align-items: center; margin-bottom: 30px;">
-        <a href="{{ route('admin.projects.index') }}" style="color: #93a1a1; text-decoration: none; margin-right: 15px; font-size: 1.2rem;">←</a>
+    <div class="page-header">
         <h1>Create New Project</h1>
+        <a href="{{ route('admin.projects.index') }}" class="back-button">
+            <span class="back-icon">←</span>
+            <span class="back-text">Torna ai Progetti</span>
+        </a>
     </div>
 
     @if ($errors->any())
@@ -18,7 +25,7 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('admin.projects.store') }}" style="display: grid; gap: 25px;">
+    <form method="POST" action="{{ route('admin.projects.store') }}" enctype="multipart/form-data" style="display: grid; gap: 25px;">
         @csrf
         
         <!-- Title -->
@@ -175,21 +182,30 @@
             </div>
         </div>
 
-        <!-- Image URL -->
+        <!-- Project Image -->
         <div>
-            <label for="image_url" style="display: block; color: #eee8d5; font-weight: bold; margin-bottom: 8px;">
-                Image URL
+            <label for="project_image" style="display: block; color: #eee8d5; font-weight: bold; margin-bottom: 8px;">
+                Project Image
             </label>
-            <input 
-                type="text" 
-                id="image_url" 
-                name="image_url" 
-                value="{{ old('image_url') }}"
-                style="width: 100%; padding: 12px; background: rgba(7, 54, 66, 0.5); border: 2px solid #073642; border-radius: 8px; color: #eee8d5; font-family: inherit; font-size: 1rem; box-sizing: border-box;"
-                class="@error('image_url') error @enderror"
-                placeholder="icons/project-icon.png"
-            >
-            @error('image_url')
+            <div class="custom-file-upload">
+                <input 
+                    type="file" 
+                    id="project_image" 
+                    name="project_image" 
+                    accept="image/*"
+                    class="@error('project_image') error @enderror"
+                    onchange="updateFileName(this)"
+                >
+                <label for="project_image" class="file-upload-label">
+                    <span class="file-upload-icon">📁</span>
+                    <span class="file-upload-text">Scegli immagine</span>
+                </label>
+                <div class="file-name" id="file-name">Nessun file selezionato</div>
+            </div>
+            <div style="color: #93a1a1; font-size: 0.8rem; margin-top: 5px;">
+                Supported formats: JPG, PNG, GIF, WebP (max 5MB)
+            </div>
+            @error('project_image')
                 <div style="color: #cb4b16; font-size: 0.8rem; margin-top: 5px;">{{ $message }}</div>
             @enderror
         </div>
@@ -221,11 +237,125 @@
 </div>
 
 <style>
+    /* Ensure proper layout */
+    .admin-main {
+        position: relative;
+        z-index: 1;
+    }
+    
+    /* Back Button Styles - Updated for page-header */
+    .back-button {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 20px;
+        background: rgba(7, 54, 66, 0.6);
+        border: 2px solid #073642;
+        border-radius: 10px;
+        color: #eee8d5;
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .back-button:hover {
+        background: rgba(181, 137, 0, 0.2);
+        border-color: #b58900;
+        color: #b58900;
+        transform: translateX(-3px);
+        box-shadow: 0 4px 15px rgba(181, 137, 0, 0.3);
+    }
+
+    .back-icon {
+        font-size: 1.5rem;
+        font-weight: bold;
+        transition: transform 0.3s ease;
+    }
+
+    .back-button:hover .back-icon {
+        transform: translateX(-2px);
+    }
+
+    .back-text {
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
     input:focus, textarea:focus, select:focus {
         outline: none;
         border-color: #b58900 !important;
         background: rgba(7, 54, 66, 0.8) !important;
         box-shadow: 0 0 20px rgba(181, 137, 0, 0.2);
+    }
+
+    /* Custom File Upload Styles */
+    .custom-file-upload {
+        position: relative;
+        display: block;
+        width: 100%;
+    }
+
+    .custom-file-upload input[type="file"] {
+        position: absolute;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        z-index: 1;
+    }
+
+    .file-upload-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        padding: 12px 20px;
+        background: rgba(7, 54, 66, 0.5);
+        border: 2px solid #073642;
+        border-radius: 8px;
+        color: #eee8d5;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: inherit;
+        font-size: 1rem;
+        box-sizing: border-box;
+        position: relative;
+        z-index: 0;
+    }
+
+    .file-upload-label:hover {
+        background: rgba(7, 54, 66, 0.8);
+        border-color: #b58900;
+        transform: translateY(-1px);
+        box-shadow: 0 5px 15px rgba(181, 137, 0, 0.2);
+    }
+
+    .file-upload-icon {
+        font-size: 1.2rem;
+    }
+
+    .file-upload-text {
+        font-weight: 500;
+    }
+
+    .file-name {
+        margin-top: 8px;
+        padding: 8px 12px;
+        background: rgba(7, 54, 66, 0.3);
+        border-radius: 6px;
+        color: #93a1a1;
+        font-size: 0.9rem;
+        font-style: italic;
+        text-align: center;
+    }
+
+    .file-name.has-file {
+        color: #b58900;
+        font-style: normal;
+        font-weight: 500;
     }
 
     input.error, textarea.error, select.error {
@@ -245,4 +375,15 @@
     }
 </style>
 
-@endsection
+<script>
+function updateFileName(input) {
+    const fileNameDiv = document.getElementById('file-name');
+    if (input.files && input.files[0]) {
+        fileNameDiv.textContent = input.files[0].name;
+        fileNameDiv.classList.add('has-file');
+    } else {
+        fileNameDiv.textContent = 'Nessun file selezionato';
+        fileNameDiv.classList.remove('has-file');
+    }
+}
+</script>

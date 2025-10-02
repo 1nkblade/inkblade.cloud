@@ -1,33 +1,31 @@
-@extends('layouts.admin')
+<?php $__env->startPush('styles'); ?>
+<link rel="stylesheet" href="<?php echo e(asset('css/admin-projects.css')); ?>?v=<?php echo e(time()); ?>">
+<?php $__env->stopPush(); ?>
 
-@push('styles')
-<link rel="stylesheet" href="{{ asset('css/admin-projects.css') }}?v={{ time() }}">
-@endpush
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="admin-card">
     <div class="page-header">
-        <h1>Edit Project: {{ $project->title }}</h1>
-        <a href="{{ route('admin.projects.index') }}" class="back-button">
+        <h1>Edit Project: <?php echo e($project->title); ?></h1>
+        <a href="<?php echo e(route('admin.projects.index')); ?>" class="back-button">
             <span class="back-icon">←</span>
             <span class="back-text">Torna ai Progetti</span>
         </a>
     </div>
 
-    @if ($errors->any())
+    <?php if($errors->any()): ?>
         <div style="background: rgba(203, 75, 22, 0.2); border: 1px solid #cb4b16; color: #cb4b16; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
             <h4 style="margin: 0 0 10px 0;">There are errors in the form:</h4>
             <ul style="margin: 0; padding-left: 20px;">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
+                <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <li><?php echo e($error); ?></li>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </ul>
         </div>
-    @endif
+    <?php endif; ?>
 
-    <form method="POST" action="{{ route('admin.projects.update', $project) }}" enctype="multipart/form-data" style="display: grid; gap: 25px;">
-        @csrf
-        @method('PUT')
+    <form method="POST" action="<?php echo e(route('admin.projects.update', $project)); ?>" enctype="multipart/form-data" style="display: grid; gap: 25px;">
+        <?php echo csrf_field(); ?>
+        <?php echo method_field('PUT'); ?>
         
         <!-- Title -->
         <div>
@@ -38,15 +36,29 @@
                 type="text" 
                 id="title" 
                 name="title" 
-                value="{{ old('title', $project->title) }}"
+                value="<?php echo e(old('title', $project->title)); ?>"
                 style="width: 100%; padding: 12px; background: rgba(7, 54, 66, 0.5); border: 2px solid #073642; border-radius: 8px; color: #eee8d5; font-family: inherit; font-size: 1rem; box-sizing: border-box;"
-                class="@error('title') error @enderror"
+                class="<?php $__errorArgs = ['title'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> error <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                 placeholder="Enter project title"
                 required
             >
-            @error('title')
-                <div style="color: #cb4b16; font-size: 0.8rem; margin-top: 5px;">{{ $message }}</div>
-            @enderror
+            <?php $__errorArgs = ['title'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <div style="color: #cb4b16; font-size: 0.8rem; margin-top: 5px;"><?php echo e($message); ?></div>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
 
         <!-- Description -->
@@ -59,13 +71,27 @@
                 name="description" 
                 rows="4"
                 style="width: 100%; padding: 12px; background: rgba(7, 54, 66, 0.5); border: 2px solid #073642; border-radius: 8px; color: #eee8d5; font-family: inherit; font-size: 1rem; box-sizing: border-box; resize: vertical;"
-                class="@error('description') error @enderror"
+                class="<?php $__errorArgs = ['description'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> error <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                 placeholder="Describe the project..."
                 required
-            >{{ old('description', $project->description) }}</textarea>
-            @error('description')
-                <div style="color: #cb4b16; font-size: 0.8rem; margin-top: 5px;">{{ $message }}</div>
-            @enderror
+            ><?php echo e(old('description', $project->description)); ?></textarea>
+            <?php $__errorArgs = ['description'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <div style="color: #cb4b16; font-size: 0.8rem; margin-top: 5px;"><?php echo e($message); ?></div>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
 
         <!-- Status and Order -->
@@ -79,18 +105,32 @@
                     id="status" 
                     name="status"
                     style="width: 100%; padding: 12px; background: rgba(7, 54, 66, 0.5); border: 2px solid #073642; border-radius: 8px; color: #eee8d5; font-family: inherit; font-size: 1rem; box-sizing: border-box;"
-                    class="@error('status') error @enderror"
+                    class="<?php $__errorArgs = ['status'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> error <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                     required
                 >
                     <option value="">Select status...</option>
-                    <option value="active" {{ old('status', $project->status) === 'active' ? 'selected' : '' }}>Active</option>
-                    <option value="completed" {{ old('status', $project->status) === 'completed' ? 'selected' : '' }}>Completed</option>
-                    <option value="in-progress" {{ old('status', $project->status) === 'in-progress' ? 'selected' : '' }}>In Progress</option>
-                    <option value="on-hold" {{ old('status', $project->status) === 'on-hold' ? 'selected' : '' }}>On Hold</option>
+                    <option value="active" <?php echo e(old('status', $project->status) === 'active' ? 'selected' : ''); ?>>Active</option>
+                    <option value="completed" <?php echo e(old('status', $project->status) === 'completed' ? 'selected' : ''); ?>>Completed</option>
+                    <option value="in-progress" <?php echo e(old('status', $project->status) === 'in-progress' ? 'selected' : ''); ?>>In Progress</option>
+                    <option value="on-hold" <?php echo e(old('status', $project->status) === 'on-hold' ? 'selected' : ''); ?>>On Hold</option>
                 </select>
-                @error('status')
-                    <div style="color: #cb4b16; font-size: 0.8rem; margin-top: 5px;">{{ $message }}</div>
-                @enderror
+                <?php $__errorArgs = ['status'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div style="color: #cb4b16; font-size: 0.8rem; margin-top: 5px;"><?php echo e($message); ?></div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
             <!-- Order -->
@@ -102,16 +142,30 @@
                     type="number" 
                     id="sort_order" 
                     name="sort_order" 
-                    value="{{ old('sort_order', $project->sort_order) }}"
+                    value="<?php echo e(old('sort_order', $project->sort_order)); ?>"
                     min="0" 
                     max="999"
                     style="width: 100%; padding: 12px; background: rgba(7, 54, 66, 0.5); border: 2px solid #073642; border-radius: 8px; color: #eee8d5; font-family: inherit; font-size: 1rem; box-sizing: border-box;"
-                    class="@error('sort_order') error @enderror"
+                    class="<?php $__errorArgs = ['sort_order'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> error <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                     placeholder="0"
                 >
-                @error('sort_order')
-                    <div style="color: #cb4b16; font-size: 0.8rem; margin-top: 5px;">{{ $message }}</div>
-                @enderror
+                <?php $__errorArgs = ['sort_order'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div style="color: #cb4b16; font-size: 0.8rem; margin-top: 5px;"><?php echo e($message); ?></div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
         </div>
 
@@ -124,18 +178,32 @@
                 type="text" 
                 id="technologies" 
                 name="technologies" 
-                value="{{ old('technologies') ? (is_array(old('technologies')) ? implode(', ', old('technologies')) : old('technologies')) : ($project->technologies ? implode(', ', $project->technologies) : '') }}"
+                value="<?php echo e(old('technologies') ? (is_array(old('technologies')) ? implode(', ', old('technologies')) : old('technologies')) : ($project->technologies ? implode(', ', $project->technologies) : '')); ?>"
                 style="width: 100%; padding: 12px; background: rgba(7, 54, 66, 0.5); border: 2px solid #073642; border-radius: 8px; color: #eee8d5; font-family: inherit; font-size: 1rem; box-sizing: border-box;"
-                class="@error('technologies') error @enderror"
+                class="<?php $__errorArgs = ['technologies'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> error <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                 placeholder="Laravel, PHP, JavaScript, CSS..."
                 required
             >
             <div style="color: #93a1a1; font-size: 0.8rem; margin-top: 5px;">
                 Example: Laravel, PHP, JavaScript, CSS, HTML
             </div>
-            @error('technologies')
-                <div style="color: #cb4b16; font-size: 0.8rem; margin-top: 5px;">{{ $message }}</div>
-            @enderror
+            <?php $__errorArgs = ['technologies'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <div style="color: #cb4b16; font-size: 0.8rem; margin-top: 5px;"><?php echo e($message); ?></div>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
 
         <!-- URLs -->
@@ -149,14 +217,28 @@
                     type="url" 
                     id="github_url" 
                     name="github_url" 
-                    value="{{ old('github_url', $project->github_url) }}"
+                    value="<?php echo e(old('github_url', $project->github_url)); ?>"
                     style="width: 100%; padding: 12px; background: rgba(7, 54, 66, 0.5); border: 2px solid #073642; border-radius: 8px; color: #eee8d5; font-family: inherit; font-size: 1rem; box-sizing: border-box;"
-                    class="@error('github_url') error @enderror"
+                    class="<?php $__errorArgs = ['github_url'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> error <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                     placeholder="https://github.com/username/repo"
                 >
-                @error('github_url')
-                    <div style="color: #cb4b16; font-size: 0.8rem; margin-top: 5px;">{{ $message }}</div>
-                @enderror
+                <?php $__errorArgs = ['github_url'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div style="color: #cb4b16; font-size: 0.8rem; margin-top: 5px;"><?php echo e($message); ?></div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
             <!-- Project Folder -->
@@ -168,18 +250,33 @@
                     type="text" 
                     id="demo_url" 
                     name="demo_url" 
-                    value="{{ old('demo_url', str_replace('/projects/', '', $project->demo_url ?? '')) }}"
+                    value="<?php echo e(old('demo_url', str_replace('/projects/', '', $project->demo_url ?? ''))); ?>"
                     style="width: 100%; padding: 12px; background: rgba(7, 54, 66, 0.3); border: 2px solid #073642; border-radius: 8px; color: #93a1a1; font-family: inherit; font-size: 1rem; box-sizing: border-box;"
-                    class="@error('demo_url') error @enderror"
+                    class="<?php $__errorArgs = ['demo_url'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> error <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                     placeholder="my-awesome-project"
                     readonly
                 >
                 <div style="color: #93a1a1; font-size: 0.8rem; margin-top: 5px;">
-                    Existing folder: {{ str_replace('/projects/', '', $project->demo_url ?? 'None') }}
+                    Existing folder: <?php echo e(str_replace('/projects/', '', $project->demo_url ?? 'None')); ?>
+
                 </div>
-                @error('demo_url')
-                    <div style="color: #cb4b16; font-size: 0.8rem; margin-top: 5px;">{{ $message }}</div>
-                @enderror
+                <?php $__errorArgs = ['demo_url'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div style="color: #cb4b16; font-size: 0.8rem; margin-top: 5px;"><?php echo e($message); ?></div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
         </div>
 
@@ -189,14 +286,14 @@
                 Project Image
             </label>
             
-            @if($project->image_url && file_exists(public_path('images/projects/' . basename($project->image_url))))
+            <?php if($project->image_url && file_exists(public_path('images/projects/' . basename($project->image_url)))): ?>
                 <div style="margin-bottom: 15px;">
                     <div style="color: #93a1a1; font-size: 0.9rem; margin-bottom: 10px;">Current image:</div>
-                    <img src="{{ asset('images/projects/' . basename($project->image_url)) }}" 
+                    <img src="<?php echo e(asset('images/projects/' . basename($project->image_url))); ?>" 
                          alt="Current project image" 
                          style="max-width: 200px; max-height: 150px; border-radius: 8px; border: 2px solid #073642;">
                 </div>
-            @endif
+            <?php endif; ?>
             
             <div class="custom-file-upload">
                 <input 
@@ -204,7 +301,14 @@
                     id="project_image" 
                     name="project_image" 
                     accept="image/*"
-                    class="@error('project_image') error @enderror"
+                    class="<?php $__errorArgs = ['project_image'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> error <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                     onchange="updateFileName(this)"
                 >
                 <label for="project_image" class="file-upload-label">
@@ -216,9 +320,16 @@
             <div style="color: #93a1a1; font-size: 0.8rem; margin-top: 5px;">
                 Supported formats: JPG, PNG, GIF, WebP (max 5MB). Leave empty to keep current image.
             </div>
-            @error('project_image')
-                <div style="color: #cb4b16; font-size: 0.8rem; margin-top: 5px;">{{ $message }}</div>
-            @enderror
+            <?php $__errorArgs = ['project_image'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <div style="color: #cb4b16; font-size: 0.8rem; margin-top: 5px;"><?php echo e($message); ?></div>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
 
         <!-- Featured -->
@@ -228,7 +339,8 @@
                     type="checkbox" 
                     name="is_featured" 
                     value="1"
-                    {{ old('is_featured', $project->is_featured) ? 'checked' : '' }}
+                    <?php echo e(old('is_featured', $project->is_featured) ? 'checked' : ''); ?>
+
                     style="transform: scale(1.2);"
                 >
                 Featured Project
@@ -240,17 +352,19 @@
             <h3 style="color: #b58900; margin-bottom: 15px;">Project Information</h3>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; color: #93a1a1;">
                 <div>
-                    <strong>Created:</strong> {{ $project->created_at->format('d/m/Y H:i') }}
+                    <strong>Created:</strong> <?php echo e($project->created_at->format('d/m/Y H:i')); ?>
+
                 </div>
                 <div>
-                    <strong>Last updated:</strong> {{ $project->updated_at->format('d/m/Y H:i') }}
+                    <strong>Last updated:</strong> <?php echo e($project->updated_at->format('d/m/Y H:i')); ?>
+
                 </div>
             </div>
         </div>
 
         <!-- Buttons -->
         <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 20px;">
-            <a href="{{ route('admin.projects.index') }}" style="padding: 12px 20px; background: rgba(7, 54, 66, 0.5); color: #93a1a1; text-decoration: none; border-radius: 8px; border: 1px solid #073642; transition: all 0.3s ease;">
+            <a href="<?php echo e(route('admin.projects.index')); ?>" style="padding: 12px 20px; background: rgba(7, 54, 66, 0.5); color: #93a1a1; text-decoration: none; border-radius: 8px; border: 1px solid #073642; transition: all 0.3s ease;">
                 Cancel
             </a>
             <button type="submit" style="padding: 12px 20px; background: linear-gradient(135deg, #b58900, #cb4b16); color: #002b36; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
@@ -411,3 +525,5 @@ function updateFileName(input) {
     }
 }
 </script>
+
+<?php echo $__env->make('layouts.admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH /var/www/inkblade.cloud/resources/views/admin/projects/edit.blade.php ENDPATH**/ ?>
