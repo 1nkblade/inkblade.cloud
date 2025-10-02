@@ -26,7 +26,7 @@ class StoreProjectRequest extends FormRequest
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:1000',
             'status' => 'required|in:active,completed,in-progress,on-hold',
-            'technologies' => 'required|string|max:500',
+            'technologies' => 'string|max:500',
             'github_url' => 'nullable|url|max:255',
             'demo_url' => 'required|string|max:100|regex:/^[a-z0-9-]+$/',
             'project_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',

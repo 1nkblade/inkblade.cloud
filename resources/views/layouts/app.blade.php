@@ -338,7 +338,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="{{ route('feed') }}" class="dropdown-link"><span>◐</span> Feed</a></li>
-                        <li><a href="#" class="dropdown-link"><span>✉</span> Contact</a></li>
+                        <li><a href="{{ route('contact') }}" class="dropdown-link"><span>✉</span> Contact</a></li>
                         <li><a href="#" class="dropdown-link"><span>◯</span> About</a></li>
                     </ul>
                 </li>
@@ -349,7 +349,7 @@
                     </a>
                 </li>
                 <li class="nav-item mobile-only">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('contact') }}" class="nav-link">
                         <span>✉</span> Contact
                     </a>
                 </li>

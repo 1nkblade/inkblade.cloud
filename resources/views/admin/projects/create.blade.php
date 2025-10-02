@@ -194,7 +194,7 @@
                     name="project_image" 
                     accept="image/*"
                     class="@error('project_image') error @enderror"
-                    onchange="updateFileName(this)"
+                    onchange="updateFileName(this); validateFileSize(this)"
                 >
                 <label for="project_image" class="file-upload-label">
                     <span class="file-upload-icon">📁</span>
@@ -385,5 +385,26 @@ function updateFileName(input) {
         fileNameDiv.textContent = 'Nessun file selezionato';
         fileNameDiv.classList.remove('has-file');
     }
+}
+
+function validateFileSize(input) {
+    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+    const fileNameDiv = document.getElementById('file-name');
+    
+    if (input.files && input.files[0]) {
+        const fileSize = input.files[0].size;
+        
+        if (fileSize > maxSize) {
+            fileNameDiv.textContent = `File troppo grande: ${(fileSize / 1024 / 1024).toFixed(1)}MB (max 5MB)`;
+            fileNameDiv.style.color = '#cb4b16';
+            fileNameDiv.classList.remove('has-file');
+            input.value = ''; // Clear the input
+            return false;
+        } else {
+            fileNameDiv.style.color = '#b58900';
+            fileNameDiv.classList.add('has-file');
+        }
+    }
+    return true;
 }
 </script>

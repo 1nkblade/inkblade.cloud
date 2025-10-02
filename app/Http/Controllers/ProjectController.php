@@ -28,7 +28,7 @@ class ProjectController extends Controller
                 'status' => $project->status,
                 'technologies' => $project->technologies,
                 'github_url' => $project->github_url,
-                'demo_url' => $project->demo_url ?: route('project.show', $project->id),
+                'demo_url' => $this->generateDemoUrl($project),
                 'image' => $project->image_url ? asset($project->image_url) : asset('icons/icons8-cat-100.png')
             ];
         });
@@ -95,6 +95,67 @@ class ProjectController extends Controller
     }
 
     /**
+     * Display the specified project by slug
+     */
+    public function showBySlug($slug)
+    {
+        // Handle legacy test project routes
+        if ($slug === 'test' || $slug === 'test-project') {
+            return view('projects.test.index');
+        }
+
+        // Handle calculator project route
+        if ($slug === 'calculator') {
+            return view('projects.calculator.index');
+        }
+
+        // Handle 3D graphics project route
+        if ($slug === '3d-graphics' || $slug === '3D-graphics') {
+            return view('projects.3d-graphics.index');
+        }
+
+        // Try to find project by demo_url (folder name)
+        $project = Project::where('demo_url', $slug)->first();
+        
+        if ($project) {
+            // Redirect to specific project views based on title
+            if ($project->title === 'Test Project') {
+                return view('projects.test.index');
+            }
+            
+            if ($project->title === 'Calculator') {
+                return view('projects.calculator.index');
+            }
+
+            // For other projects, try to load the view
+            $viewPath = "projects.{$slug}.index";
+            if (view()->exists($viewPath)) {
+                return view($viewPath);
+            }
+            
+            // Try lowercase version if original doesn't exist
+            $lowerViewPath = "projects." . strtolower($slug) . ".index";
+            if (view()->exists($lowerViewPath)) {
+                return view($lowerViewPath);
+            }
+        }
+
+        // If no project found or view doesn't exist, try to load the view directly
+        $viewPath = "projects.{$slug}.index";
+        if (view()->exists($viewPath)) {
+            return view($viewPath);
+        }
+        
+        // Try lowercase version if original doesn't exist
+        $lowerViewPath = "projects." . strtolower($slug) . ".index";
+        if (view()->exists($lowerViewPath)) {
+            return view($lowerViewPath);
+        }
+
+        abort(404, 'Project not found');
+    }
+
+    /**
      * Display the specified project
      */
     public function show($projectId)
@@ -111,7 +172,7 @@ class ProjectController extends Controller
 
         // Handle 3D graphics project route
         if ($projectId === '3d-graphics' || $projectId === '3D-graphics') {
-            return view('projects.3D-graphics.index');
+            return view('projects.3d-graphics.index');
         }
 
         // Try to find project by ID
@@ -340,5 +401,21 @@ code {
 }
 </style>
 @endsection";
+    }
+
+    /**
+     * Generate demo URL for a project
+     */
+    private function generateDemoUrl($project)
+    {
+        // If project has a demo_url (folder name), use it
+        if ($project->demo_url) {
+            // Clean the folder name (remove /projects/ prefix if present)
+            $folderName = str_replace('/projects/', '', $project->demo_url);
+            return route('project.slug', $folderName);
+        }
+        
+        // Fallback to project ID route
+        return route('project.show', $project->id);
     }
 }
