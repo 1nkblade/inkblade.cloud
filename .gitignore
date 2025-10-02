@@ -200,3 +200,4 @@ venv.bak/
 *.test
 *.out
 go.work
+PROJECT_RECOMMENDATIONS.md

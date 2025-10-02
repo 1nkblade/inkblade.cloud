@@ -112,6 +112,65 @@
             font-size: 1.1em;
         }
 
+        /* Hide mobile-only links on desktop */
+        .mobile-only {
+            display: none;
+        }
+
+        /* Desktop dropdown styles */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #002b36;
+            border: 1px solid #073642;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            min-width: 150px;
+            z-index: 1000;
+            list-style: none;
+            padding: 10px 0;
+            margin: 0;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-link {
+            display: block;
+            padding: 12px 20px;
+            color: #93a1a1;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .dropdown-link:hover {
+            background-color: rgba(181, 137, 0, 0.1);
+            color: #eee8d5;
+        }
+
+        .dropdown-link span {
+            margin-right: 8px;
+            font-size: 1em;
+        }
+
+        /* Hide desktop dropdown on mobile */
+        .desktop-only {
+            display: block;
+        }
+
         /* Mobile menu button */
         .mobile-menu-btn {
             display: none;
@@ -121,11 +180,42 @@
             font-size: 1.5rem;
             cursor: pointer;
             padding: 10px;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+            position: relative;
         }
 
         .mobile-menu-btn:hover {
             color: #b58900; /* Solarized Dark Yellow */
+            background-color: rgba(181, 137, 0, 0.1);
+            transform: scale(1.1);
+        }
+
+        .mobile-menu-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Custom burger icon */
+        .burger-line {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #eee8d5;
+            margin: 3px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .mobile-menu-btn.active .burger-line:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .mobile-menu-btn.active .burger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active .burger-line:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
         }
 
         /* Main content */
@@ -166,8 +256,18 @@
                 gap: 15px;
             }
 
+            /* Hide desktop dropdown on mobile */
+            .desktop-only {
+                display: none;
+            }
+
             .navbar-nav.active {
                 display: flex;
+            }
+
+            /* Show mobile-only links in mobile menu */
+            .navbar-nav.active .mobile-only {
+                display: block;
             }
 
             .nav-link {
@@ -222,17 +322,48 @@
             
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="nav-item">
-                    <a href="<?php echo e(route('home')); ?>" class="nav-link <?php echo e(request()->routeIs('home') ? 'active' : ''); ?>">Home</a>
+                    <a href="<?php echo e(route('home')); ?>" class="nav-link <?php echo e(request()->routeIs('home') ? 'active' : ''); ?>">
+                        <span>⌂</span> Home
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?php echo e(route('projects')); ?>" class="nav-link <?php echo e(request()->routeIs('projects') ? 'active' : ''); ?>">Projects</a>
+                    <a href="<?php echo e(route('projects')); ?>" class="nav-link <?php echo e(request()->routeIs('projects') ? 'active' : ''); ?>">
+                        <span>◉</span> Projects
+                    </a>
                 </li>
-                <li class="nav-item">
-
+                <!-- Desktop dropdown -->
+                <li class="nav-item dropdown desktop-only">
+                    <a href="#" class="nav-link dropdown-toggle">
+                        <span>⋯</span> More
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" class="dropdown-link"><span>◐</span> Blog</a></li>
+                        <li><a href="#" class="dropdown-link"><span>✉</span> Contact</a></li>
+                        <li><a href="#" class="dropdown-link"><span>◯</span> About</a></li>
+                    </ul>
+                </li>
+                <!-- Mobile-only links -->
+                <li class="nav-item mobile-only">
+                    <a href="#" class="nav-link">
+                        <span>◐</span> Blog
+                    </a>
+                </li>
+                <li class="nav-item mobile-only">
+                    <a href="#" class="nav-link">
+                        <span>✉</span> Contact
+                    </a>
+                </li>
+                <li class="nav-item mobile-only">
+                    <a href="#" class="nav-link">
+                        <span>◯</span> About
+                    </a>
+                </li>
             </ul>
 
-            <button class="mobile-menu-btn" id="mobile-menu-btn">
-                ☰
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle mobile menu">
+                <span class="burger-line"></span>
+                <span class="burger-line"></span>
+                <span class="burger-line"></span>
             </button>
         </div>
     </nav>
@@ -246,15 +377,33 @@
     <script>
         document.getElementById('mobile-menu-btn').addEventListener('click', function() {
             const nav = document.getElementById('navbar-nav');
+            const btn = this;
+            
             nav.classList.toggle('active');
+            btn.classList.toggle('active');
         });
 
         // Close mobile menu when clicking on a link
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', function() {
                 const nav = document.getElementById('navbar-nav');
+                const btn = document.getElementById('mobile-menu-btn');
+                
                 nav.classList.remove('active');
+                btn.classList.remove('active');
             });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const nav = document.getElementById('navbar-nav');
+            const btn = document.getElementById('mobile-menu-btn');
+            const navbar = document.querySelector('.navbar');
+            
+            if (!navbar.contains(event.target) && nav.classList.contains('active')) {
+                nav.classList.remove('active');
+                btn.classList.remove('active');
+            }
         });
     </script>
 
