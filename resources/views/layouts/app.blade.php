@@ -322,9 +322,9 @@
             
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="nav-item">
-                    <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
-                        <span>⌂</span> Home
-                    </a>
+                <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
+                    <span>⌂</span> Home
+                </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('projects') }}" class="nav-link {{ request()->routeIs('projects') ? 'active' : '' }}">
@@ -337,15 +337,15 @@
                         <span>⋯</span> More
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#" class="dropdown-link"><span>◐</span> Blog</a></li>
+                        <li><a href="{{ route('feed') }}" class="dropdown-link"><span>◐</span> Feed</a></li>
                         <li><a href="#" class="dropdown-link"><span>✉</span> Contact</a></li>
                         <li><a href="#" class="dropdown-link"><span>◯</span> About</a></li>
                     </ul>
                 </li>
                 <!-- Mobile-only links -->
                 <li class="nav-item mobile-only">
-                    <a href="#" class="nav-link">
-                        <span>◐</span> Blog
+                    <a href="{{ route('feed') }}" class="nav-link">
+                        <span>◐</span> Feed
                     </a>
                 </li>
                 <li class="nav-item mobile-only">

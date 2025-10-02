@@ -44,14 +44,12 @@
                         <div class="project-links">
                             @if($project['github_url'] && $project['github_url'] !== '#')
                                 <a href="{{ $project['github_url'] }}" class="project-link" target="_blank" rel="noopener">
-                                    <span>📁</span>
                                     GitHub
                                 </a>
                             @endif
                             
                             @if($project['demo_url'])
                                 <a href="{{ $project['demo_url'] }}" class="project-link secondary" target="_blank" rel="noopener">
-                                    <span>🌐</span>
                                     Live Demo
                                 </a>
                             @endif

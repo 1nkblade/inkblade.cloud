@@ -43,14 +43,12 @@
                         <div class="project-links">
                             <?php if($project['github_url'] && $project['github_url'] !== '#'): ?>
                                 <a href="<?php echo e($project['github_url']); ?>" class="project-link" target="_blank" rel="noopener">
-                                    <span>📁</span>
                                     GitHub
                                 </a>
                             <?php endif; ?>
                             
                             <?php if($project['demo_url']): ?>
                                 <a href="<?php echo e($project['demo_url']); ?>" class="project-link secondary" target="_blank" rel="noopener">
-                                    <span>🌐</span>
                                     Live Demo
                                 </a>
                             <?php endif; ?>
