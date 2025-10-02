@@ -1,27 +1,27 @@
 @extends('layouts.app')
 
-@section('title', 'Calculator - Inkblade.cloud')
+@section('title', 'test - Inkblade.cloud')
 
 @section('content')
 <div class="container">
     <div class="project-header">
-        <h1>Calculator</h1>
-        <p class="project-description">Progetto #2</p>
+        <h1>test</h1>
+        <p class="project-description">Progetto #9</p>
     </div>
     
     <div class="project-content">
         <div class="project-demo">
             <h2>Progetto</h2>
-            <p>Cartella: <code>/projects/calculator</code></p>
-            <p>Percorso: <code>/resources/views/projects//projects/calculator/</code></p>
-            <p>ID Progetto: <code>2</code></p>
+            <p>Cartella: <code>test-crud</code></p>
+            <p>Percorso: <code>/resources/views/projects/test-crud/</code></p>
+            <p>ID Progetto: <code>9</code></p>
         </div>
         
         <div class="project-info">
             <h2>Informazioni Progetto</h2>
             <p>Questo progetto è stato creato automaticamente dal sistema di gestione.</p>
             <p>La cartella del progetto è stata creata in:</p>
-            <code>/var/www/inkblade.cloud/resources/views/projects//projects/calculator/</code>
+            <code>/var/www/inkblade.cloud/resources/views/projects/test-crud/</code>
             
             <div style="margin-top: 20px;">
                 <a href="{{ route('projects') }}" class="back-link">

@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
             oscillator.stop(audioContext.currentTime + 0.3);
             
         } catch (error) {
-            console.log('Audio not supported:', error);
+            // Audio not supported
         }
     }
     
@@ -179,7 +179,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 quoteElement.innerHTML = '<p>"I am the greatest artist of all time!" - Kanye</p>';
                 newQuoteBtn.disabled = false;
                 newQuoteBtn.textContent = 'Get New Quote';
-                console.log('Kanye API failed, showing fallback quote');
             });
     }
     
@@ -212,7 +211,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 factElement.innerHTML = '<p>A group of cats is called a "clowder" and a group of kittens is called a "kindling".</p>';
                 newFactBtn.disabled = false;
                 newFactBtn.textContent = 'Get New Fact';
-                console.log('Useless facts API failed, showing fallback fact');
             });
     }
     

@@ -45,23 +45,32 @@ inkblade.cloud is designed to provide cutting-edge web services and solutions. T
 <td width="50%">
 
 ### 🏗️ Architecture
-- Modern web architecture
-- Scalable infrastructure
-- Cloud-native design
-- High performance
+- **Laravel 11.x** PHP Framework
+- **MVC Architecture** with clean separation
+- **Responsive Design** with Solarized Dark theme
+- **Admin Panel** with authentication system
 
 </td>
 <td width="50%">
 
 ### 🛠️ Technology Stack
-- **Frontend**: Modern JavaScript/TypeScript
-- **Backend**: Laravel PHP Framework
-- **Database**: MySQL/PostgreSQL
-- **Deployment**: Docker & Cloud
+- **Backend**: Laravel 11.x
+- **Frontend**: Blade templates, CSS3, JavaScript
+- **Database**: MySQL with Eloquent ORM
+- **Styling**: Custom CSS with JetBrains Mono font
 
 </td>
 </tr>
 </table>
+
+### 🎯 Key Features
+
+- ✅ **Portfolio Website** with interactive sections
+- ✅ **Project Management** system with database
+- ✅ **RSS Feed** integration and management
+- ✅ **Admin Authentication** with secure login
+- ✅ **Responsive Design** for all devices
+- ✅ **Modern UI/UX** with smooth animations
 
 ## 🚀 Getting Started
 
@@ -71,8 +80,9 @@ Make sure you have the following installed on your system:
 
 | Tool | Version | Purpose |
 |------|---------|---------|
-| <img src="https://nodejs.org/static/images/logos/nodejs-new-pantone-black.svg" width="16" height="16"> **Node.js** | v18+ | JavaScript runtime |
-| 📦 **npm/yarn** | Latest | Package manager |
+| 🐘 **PHP** | v8.2+ | PHP runtime |
+| 📦 **Composer** | Latest | PHP package manager |
+| 🗄️ **MySQL** | v8.0+ | Database server |
 | 🐙 **Git** | Latest | Version control |
 
 ### ⚡ Quick Setup
@@ -85,10 +95,18 @@ git clone https://github.com/1nkblade/inkblade.cloud.git
 cd inkblade.cloud
 
 # 2️⃣ Install dependencies
-npm install
+composer install
 
-# 3️⃣ Start development server
-npm run dev
+# 3️⃣ Setup environment
+cp .env.example .env
+php artisan key:generate
+
+# 4️⃣ Setup database
+php artisan migrate
+php artisan db:seed --class=AdminUserSeeder
+
+# 5️⃣ Start development server
+php artisan serve
 ```
 
 </div>
@@ -111,7 +129,34 @@ npm run dev
    npm run dev
    ```
 
-4. **Open your browser** and visit `http://localhost:3000` 🌐
+4. **Open your browser** and visit `http://localhost:8000` 🌐
+
+## 🔐 Admin Panel
+
+The website includes a secure admin panel for content management:
+
+### 🚪 Access Admin Panel
+
+- **URL**: `https://inkblade.cloud/admin`
+- **Username**: `inkblade`
+- **Password**: `Shinseka1`
+
+### 🛡️ Admin Features
+
+- ✅ **Secure Authentication** with middleware protection
+- ✅ **Dashboard** with site statistics and quick actions
+- ✅ **User Management** (single admin user)
+- ✅ **Session Management** with secure logout
+- ✅ **CSRF Protection** for all forms
+
+### 🔧 Admin Routes
+
+| Route | Method | Description |
+|-------|--------|-------------|
+| `/admin` | GET | Login page |
+| `/admin/login` | POST | Authentication |
+| `/admin/dashboard` | GET | Admin dashboard (protected) |
+| `/admin/logout` | POST | Logout |
 
 ## 💻 Development
 
@@ -119,30 +164,36 @@ npm run dev
 
 ```
 inkblade.cloud/
-├── 📂 src/                 # Source code
-│   ├── 🎨 components/      # UI components
-│   ├── 🔧 utils/           # Utility functions
-│   └── 📄 pages/           # Page components
-├── 📂 public/              # Static assets
-│   ├── 🖼️ images/          # Image files
-│   └── 🎨 css/             # Stylesheets
-├── 📂 resources/           # Laravel resources
+├── 📂 app/                 # Application code
+│   ├── 🎮 Http/Controllers/ # Controllers
+│   ├── 🛡️ Http/Middleware/  # Middleware
+│   └── 📊 Models/          # Eloquent models
+├── 📂 database/            # Database files
+│   ├── 🗃️ migrations/      # Database migrations
+│   └── 🌱 seeders/         # Database seeders
+├── 📂 resources/           # Resources
 │   └── 📂 views/           # Blade templates
-├── 📂 docs/                # Documentation
-├── 📂 tests/               # Test files
+│       ├── 🏠 home.blade.php
+│       ├── 📁 admin/       # Admin views
+│       └── 📁 layouts/     # Layout templates
+├── 📂 routes/              # Route definitions
+├── 📂 public/              # Public assets
+│   ├── 🖼️ icons/           # Icon files
+│   └── 🎨 css/             # Stylesheets
 └── 📄 README.md            # This file
 ```
 
-### 🛠️ Available Scripts
+### 🛠️ Available Commands
 
 <div align="center">
 
 | Command | Description | Icon |
 |---------|-------------|------|
-| `npm run dev` | 🚀 Start development server | ⚡ |
-| `npm run build` | 🏗️ Build for production | 📦 |
-| `npm run test` | 🧪 Run tests | 🔬 |
-| `npm run lint` | 🔍 Run linter | ✨ |
+| `php artisan serve` | 🚀 Start development server | ⚡ |
+| `php artisan migrate` | 🗃️ Run database migrations | 📦 |
+| `php artisan db:seed` | 🌱 Seed database | 🌱 |
+| `php artisan route:list` | 📋 List all routes | 📋 |
+| `php artisan cache:clear` | 🧹 Clear application cache | ✨ |
 
 </div>
 
