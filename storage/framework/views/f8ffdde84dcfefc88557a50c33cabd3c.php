@@ -1,14 +1,96 @@
 <?php $__env->startSection('title', 'Home - Inkblade.cloud'); ?>
 
 <?php $__env->startPush('styles'); ?>
-<link rel="stylesheet" href="<?php echo e(asset('css/home.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('css/home.css')); ?>?v=<?php echo e(time()); ?>">
+<style>
+@keyframes letterBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+@keyframes letterBounceMobile {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+.letter {
+    display: inline-block;
+    animation: letterBounce 2s ease-in-out infinite;
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .letter {
+        animation: letterBounceMobile 2s ease-in-out infinite;
+    }
+    
+    .hero-title {
+        font-size: 1.5rem !important;
+        white-space: nowrap;
+    }
+    
+    .letter {
+        margin: 0 0.5px;
+    }
+}
+
+@media (max-width: 430px) {
+    .letter {
+        animation: letterBounceMobile 2s ease-in-out infinite;
+    }
+    
+    .hero-title {
+        font-size: 1.2rem !important;
+        white-space: nowrap;
+    }
+    
+    .letter {
+        margin: 0 0.2px;
+    }
+}
+
+@media (max-width: 360px) {
+    .hero-title {
+        font-size: 1rem !important;
+        white-space: nowrap;
+    }
+    
+    .letter {
+        margin: 0 0.1px;
+    }
+}
+</style>
 <?php $__env->stopPush(); ?>
 
 <?php $__env->startSection('content'); ?>
 <!-- Hero Section -->
 <section class="hero-section">
     <div class="hero-content">
-        <h1 class="hero-title">Hello World!</h1>
+        <h1 class="hero-title" style="display: inline-block; transform-origin: center;">
+            <span class="letter" style="animation-delay: 0s;">H</span>
+            <span class="letter" style="animation-delay: 0.1s;">e</span>
+            <span class="letter" style="animation-delay: 0.2s;">l</span>
+            <span class="letter" style="animation-delay: 0.3s;">l</span>
+            <span class="letter" style="animation-delay: 0.4s;">o</span>
+            <span style="margin: 0 10px;"></span>
+            <span class="letter" style="animation-delay: 0.5s;">W</span>
+            <span class="letter" style="animation-delay: 0.6s;">o</span>
+            <span class="letter" style="animation-delay: 0.7s;">r</span>
+            <span class="letter" style="animation-delay: 0.8s;">l</span>
+            <span class="letter" style="animation-delay: 0.9s;">d</span>
+            <span class="letter" style="animation-delay: 1.0s;">!</span>
+        </h1>
         <p class="hero-subtitle">Welcome to Inkblade.cloud</p>
     </div>
 </section>
@@ -56,7 +138,12 @@
         <a href="<?php echo e(route('projects')); ?>" class="btn btn-secondary">View Projects</a>
     </div>
 
-
+    <div class="content-section text-center">
+        <h3>PIBBLE!</h3>
+        <img src="<?php echo e(asset('images/pibble.jpg')); ?>" alt="Pibble" class="pibble-image" style="cursor: pointer;" onclick="window.location.href='<?php echo e(route('games.pibble-belly')); ?>'">
+        <br><br>
+        <a href="<?php echo e(route('games.pibble-belly')); ?>" class="btn btn-secondary">🧼 Wash Pibble Belly</a>
+    </div>
 
     
     

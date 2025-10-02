@@ -337,12 +337,18 @@
                         <span>⋯</span> More
                     </a>
                     <ul class="dropdown-menu">
+                        <li><a href="{{ route('games') }}" class="dropdown-link"><span>◊</span> Games</a></li>
                         <li><a href="{{ route('feed') }}" class="dropdown-link"><span>◐</span> Feed</a></li>
                         <li><a href="{{ route('contact') }}" class="dropdown-link"><span>✉</span> Contact</a></li>
                         <li><a href="#" class="dropdown-link"><span>◯</span> About</a></li>
                     </ul>
                 </li>
                 <!-- Mobile-only links -->
+                <li class="nav-item mobile-only">
+                    <a href="{{ route('games') }}" class="nav-link">
+                        <span>◊</span> Games
+                    </a>
+                </li>
                 <li class="nav-item mobile-only">
                     <a href="{{ route('feed') }}" class="nav-link">
                         <span>◐</span> Feed

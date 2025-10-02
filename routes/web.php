@@ -6,11 +6,16 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\FeedController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\GamesController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/projects', [ProjectController::class, 'index'])->name('projects');
 Route::get('/projects/{projectId}', [ProjectController::class, 'show'])->name('project.show');
 Route::get('/project/{slug}', [ProjectController::class, 'showBySlug'])->name('project.slug');
+Route::get('/games', [GamesController::class, 'index'])->name('games');
+Route::get('/games/tetris', [GamesController::class, 'tetris'])->name('games.tetris');
+Route::get('/games/tic-tac-toe', [GamesController::class, 'tictactoe'])->name('games.tictactoe');
+Route::get('/games/pibble-belly', [GamesController::class, 'pibbleBelly'])->name('games.pibble-belly');
 Route::get('/feed', [FeedController::class, 'index'])->name('feed');
 Route::get('/feed/refresh', [FeedController::class, 'refresh'])->name('feed.refresh');
 Route::get('/feed/debug', [FeedController::class, 'debug'])->name('feed.debug');
